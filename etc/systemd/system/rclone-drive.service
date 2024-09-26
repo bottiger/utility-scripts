@@ -1,0 +1,25 @@
+¨[Unit]
+Description=Mount Google Drive using rclone
+After=network-online.target
+Wants=network-online.target
+
+# Setup 
+# 1. Change the username from "bottiger" to your local username and group
+# 2. Run "rclone config" and setup your remote driver using the name GoogleDrive
+# 3. Create the mountpoint /home/bottiger/mounts/google_drive
+[Service]
+Type=simple
+ExecStart=/usr/bin/rclone mount GoogleDrive: /home/bottiger/mounts/google_drive \
+   --vfs-cache-mode full \
+   --vfs-cache-max-age 24h \
+   --vfs-cache-max-size 200G \
+   --dir-cache-time 1000h \
+   --log-file /home/bottiger/.config/rclone/rclone.log \
+   --config /home/bottiger/.config/rclone/rclone.conf
+ExecStop=/bin/fusermount -u /home/bottiger/mounts/google_drive
+Restart=on-failure
+User=bottiger
+Group=bottiger
+
+[Install]
+WantedBy=default.target
