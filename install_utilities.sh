@@ -1,5 +1,10 @@
 #!/bin/env bash
 
+if ! sudo -n true 2>/dev/null; then
+  echo "This script requires sudo privileges. Please enter your password."
+  sudo -v || { echo "Unable to obtain sudo privileges. Exiting."; exit 1; }
+fi
+
 # Function to install a list of utilities
 utilities=(
   "batcat"
