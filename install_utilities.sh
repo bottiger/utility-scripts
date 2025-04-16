@@ -23,6 +23,7 @@ utilities=(
   "unzip"
   "net-tools" #linux only
   "starship" #brew only
+  "helix"
 )
 
 install_on_linux() {
